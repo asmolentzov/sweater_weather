@@ -42,6 +42,7 @@ class Weather
   
   def weather_day(index)
     {
+      date: Time.at(weather_data[:daily][:data][index][:time]).strftime('%Y-%m-%d'),
       summary: weather_data[:daily][:data][index][:icon],
       precip_probability: weather_data[:daily][:data][index][:precipProbability],
       temp_high: weather_data[:daily][:data][index][:temperatureHigh].round(0),

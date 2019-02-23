@@ -26,5 +26,6 @@ describe 'Forecast API' do
     expect(forecast_data[:data][:attributes]).to have_key(:weather_days)
     expect(forecast_data[:data][:attributes][:weather_days]).to be_a(Array)
     expect(forecast_data[:data][:attributes][:weather_days].count).to eq(5) 
+    expect(forecast_data[:data][:attributes][:weather_days].first[:date]).to eq(Time.now.strftime('%Y-%m-%d')) 
   end
 end

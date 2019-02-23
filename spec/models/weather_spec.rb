@@ -37,6 +37,7 @@ describe Weather do
     long = '-12'
     weather = Weather.new(lat, long)
     weather_day = {
+                    date: '2019-02-23',
                     summary: 'snow',
                     precip_probability: 0.55,
                     temp_high: 37,
