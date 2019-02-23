@@ -14,6 +14,10 @@ class Forecast
     @date = set_date
   end
   
+  def get_current_weather_day
+    JSON.generate(CurrentWeatherDay.new(@latitude, @longitude).weather)
+  end
+  
   private
   
   def set_latitude
