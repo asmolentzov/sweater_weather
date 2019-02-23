@@ -22,4 +22,16 @@ describe Forecast do
   it 'sets the date for a forecast' do
     expect(@forecast.date).to eq(Time.now.strftime('%Y-%m-%d'))
   end
+  it 'can get current_weather_day info' do
+    current_weather_day_info = {
+                                temp_feels_like: 30,
+                                humidity: 0.75,
+                                visibility: 10.00,
+                                uv_index: 2,
+                                summary: 'Mostly cloudy until afternoon',
+                                summary_short: 'Partly Cloudy',
+                                summary_tonight: 'Partly cloudy starting tonight, continuing until tomorrow morning'
+    }
+    expect(@forecast.get_current_weather_day). to eq(JSON.generate(current_weather_day_info))
+  end
 end
