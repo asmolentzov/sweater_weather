@@ -1,17 +1,30 @@
-class Forecast < ApplicationRecord
-  validates_presence_of(:city)
-  validates_presence_of(:state)
-  
-  before_create :set_lat_long, :set_date
+class Forecast
+  attr_reader :city,
+              :state,
+              :latitude,
+              :longitude,
+              :date
+              
+  def initialize(location)
+    location = location.split(',')
+    @city = location[0].capitalize
+    @state = location[1].upcase
+    @latitude = set_latitude
+    @longitude = set_longitude
+    @date = set_date
+  end
   
   private
   
-  def set_lat_long
-    self.latitude = LocationService.new(city, state).get_latitude
-    self.longitude = LocationService.new(city, state).get_longitude
+  def set_latitude
+    LocationService.new(city, state).get_latitude
+  end
+  
+  def set_longitude
+    LocationService.new(city, state).get_longitude
   end
   
   def set_date
-    self.date = Time.now.strftime('%Y-%m-%d')
+    Time.now.strftime('%Y-%m-%d')
   end
 end
