@@ -62,4 +62,26 @@ describe Weather do
     }
     expect(weather.current_weather_day).to eq(current_weather_day_info)
   end
+  
+  it 'can return weather days' do
+    lat = '12'
+    long = '-12'
+    weather = Weather.new(lat, long)
+    weather_day = {
+                    summary: 'Partly Cloudy',
+                    precip_probability: 0,
+                    temp_high: 37,
+                    temp_low: 18
+    }
+    
+    expect(weather.weather_days).to be_a(Array)
+    expect(weather.weather_days.count).to eq(5)
+    expect(weather.weather_days.first).to eq(weather_day)
+    weather.weather_days.each do |day|
+      expect(day).to have_key(:summary)
+      expect(day).to have_key(:precip_probability)
+      expect(day).to have_key(:temp_high)
+      expect(day).to have_key(:temp_low)
+    end
+  end
 end
