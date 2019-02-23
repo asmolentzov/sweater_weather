@@ -68,6 +68,6 @@ describe Forecast do
                                 summary_short: 'Partly Cloudy',
                                 summary_tonight: "Light snow (< 1 in.) until afternoon."
     }
-    expect(@forecast.get_current_weather_day). to eq(JSON.generate(current_weather_day_info))
+    expect(@forecast.get_current_weather_day). to eq(current_weather_day_info)
   end
 end
