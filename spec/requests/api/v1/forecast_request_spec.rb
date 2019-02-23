@@ -6,6 +6,8 @@ describe 'Forecast API' do
     
     forecast = Forecast.last
     
+    expect(response).to be_successful
+    
     expect(forecast.city).to eq('Denver')
     expect(forecast.state).to eq('CO')
     expect(forecast.latitude).to eq('39.7392')
