@@ -25,8 +25,8 @@ describe 'Forecast API' do
     expect(forecast_data[:data][:attributes][:city]).to eq(forecast.city)
     expect(forecast_data[:data][:attributes][:state]).to eq(forecast.state)
     expect(forecast_data[:data][:attributes][:date]).to eq(date)
-    expect(forecast_data[:data]).to have_key(:current_weather_day, count: 1)  
-    expect(forecast_data[:data]).to have_key(:weather_day, count: 5)  
+    expect(forecast_data[:data]).to have_key(:current_weather_day)  
+    expect(forecast_data[:data]).to have_key(:weather_day)  
     expect(forecast_data.count).to eq(5)
   end
 end

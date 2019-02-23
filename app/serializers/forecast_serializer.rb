@@ -1,4 +1,4 @@
 class ForecastSerializer
   include FastJsonapi::ObjectSerializer
-  attributes :city, :state, :latitude, :longitude
+  attributes :city, :state, :latitude, :longitude, :date
 end
