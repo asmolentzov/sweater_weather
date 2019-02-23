@@ -15,8 +15,8 @@ class Weather
       humidity: weather_data[:currently][:humidity],
       visibility: weather_data[:currently][:visibility].round(2),
       uv_index: weather_data[:currently][:uvIndex],
-      summary_short: weather_data[:currently][:summary],
       summary: today_weather[:summary],
+      summary_short: weather_data[:currently][:summary],
       summary_tonight: today_weather[:summary]
     }
   end
