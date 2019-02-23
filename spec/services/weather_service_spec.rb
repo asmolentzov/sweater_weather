@@ -11,8 +11,8 @@ describe WeatherService do
     expect(weather_service.longitude).to eq(long)
   end
   it 'can get weather' do
-    lat = '12'
-    long = '-12'
+    lat = '39.7392358'
+    long = '-104.990251'
     weather_service = WeatherService.new(lat, long)
     
     weather_data = weather_service.get_weather
