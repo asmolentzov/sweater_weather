@@ -15,10 +15,18 @@ class Forecast
   end
   
   def get_current_weather_day
-    Weather.new(@latitude, @longitude).current_weather_day
+    weather.current_weather_day
+  end
+  
+  def get_weather_days
+    weather.weather_days
   end
   
   private
+  
+  def weather
+    @weather ||= Weather.new(@latitude, @longitude)
+  end
   
   def set_latitude
     LocationService.new(city, state).get_latitude
