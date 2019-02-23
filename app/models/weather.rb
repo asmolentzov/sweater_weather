@@ -11,9 +11,9 @@ class Weather
     weather_data = WeatherService.new(@latitude, @longitude).get_weather
     today_weather = weather_data[:daily][:data].first
     {
-      temp_feels_like: weather_data[:currently][:apparentTemperature],
+      temp_feels_like: weather_data[:currently][:apparentTemperature].round(0),
       humidity: weather_data[:currently][:humidity],
-      visibility: weather_data[:currently][:visibility],
+      visibility: weather_data[:currently][:visibility].round(2),
       uv_index: weather_data[:currently][:uvIndex],
       summary_short: weather_data[:currently][:summary],
       summary: today_weather[:summary],
