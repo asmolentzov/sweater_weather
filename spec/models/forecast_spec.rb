@@ -23,42 +23,7 @@ describe Forecast do
     expect(@forecast.date).to eq(Time.now.strftime('%Y-%m-%d'))
   end
   it 'can get current_weather_day info', :vcr do
-    weather_data = { "currently": {
-        "summary": "Partly Cloudy",
-        "icon": "partly-cloudy-day",
-        "temperature": 34.97,
-        "apparentTemperature": 34.97,
-        "humidity": 0.55,
-        "uvIndex": 4,
-        "visibility": 10,
-    },
-    "hourly": {
-        "summary": "Light snow later this afternoon.",
-        "icon": "snow",
-        "data": [
-            {
-                "summary": "Light Snow",
-                "temperature": 34.96,
-                "apparentTemperature": 34.96,
-                "humidity": 0.55,
-                "uvIndex": 4,
-                "visibility": 10
-            }
-        ]
-    },
-    "daily": {
-        "summary": "Snow (2–4 in.) today and next Saturday, with high temperatures peaking at 58°F on Tuesday.",
-        "icon": "snow",
-        "data": [
-            {
-                "time": 1550905200,
-                "summary": "Light snow (< 1 in.) until afternoon.",
-                "icon": "snow"
-              }
-            ]
-          }
-        }
-    allow_any_instance_of(WeatherService).to receive(:get_weather).and_return(weather_data)
+    allow_any_instance_of(WeatherService).to receive(:get_weather).and_return(JSON.parse(File.read(Rails.root.join('spec/fixtures/weather_data.txt')), symbolize_names: true))
     current_weather_day_info = {
                                 temp_feels_like: 35,
                                 humidity: 0.55,
@@ -71,11 +36,15 @@ describe Forecast do
     expect(@forecast.get_current_weather_day). to eq(current_weather_day_info)
   end
   it 'can get weather days', :vcr do
-    expect(@forecast.get_weather_days).to be_a(Array)
-    expect(@forecast.get_weather_days.count).to eq(5)
-    expect(@forecast.get_weather_days.first).to have_key(:summary)
-    expect(@forecast.get_weather_days.first).to have_key(:precip_probability)
-    expect(@forecast.get_weather_days.first).to have_key(:temp_high)
-    expect(@forecast.get_weather_days.first).to have_key(:temp_low)
+    allow_any_instance_of(Forecast).to receive(:latitude).and_return('12')
+    allow_any_instance_of(Forecast).to receive(:longitude).and_return('-12')
+    forecast = Forecast.new('denver,co')
+
+    expect(forecast.get_weather_days).to be_a(Array)
+    expect(forecast.get_weather_days.count).to eq(5)
+    expect(forecast.get_weather_days.first).to have_key(:summary)
+    expect(forecast.get_weather_days.first).to have_key(:precip_probability)
+    expect(forecast.get_weather_days.first).to have_key(:temp_high)
+    expect(forecast.get_weather_days.first).to have_key(:temp_low)
   end
 end
