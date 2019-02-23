@@ -63,16 +63,17 @@ describe Weather do
     expect(weather.current_weather_day).to eq(current_weather_day_info)
   end
   
-  it 'can return weather days' do
+  it 'can return weather days', :vcr do
     lat = '12'
     long = '-12'
     weather = Weather.new(lat, long)
     weather_day = {
-                    summary: 'Partly Cloudy',
-                    precip_probability: 0,
+                    summary: 'snow',
+                    precip_probability: 0.55,
                     temp_high: 37,
                     temp_low: 18
     }
+    allow_any_instance_of(Weather).to receive(:weather_data).and_return(JSON.parse(File.read(Rails.root.join('spec/fixtures/weather_data.txt')), symbolize_names: true))
     
     expect(weather.weather_days).to be_a(Array)
     expect(weather.weather_days.count).to eq(5)
