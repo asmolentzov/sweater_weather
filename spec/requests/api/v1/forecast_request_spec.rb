@@ -10,7 +10,7 @@ describe 'Forecast API' do
     
     expect(forecast.city).to eq('Denver')
     expect(forecast.state).to eq('CO')
-    expect(forecast.latitude).to eq('39.7392')
-    expect(forecast.longitude).to eq('104.9903')
+    expect(forecast.latitude).to eq('39.7392358')
+    expect(forecast.longitude).to eq('-104.990251')
   end
 end
