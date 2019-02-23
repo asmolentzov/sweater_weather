@@ -70,4 +70,12 @@ describe Forecast do
     }
     expect(@forecast.get_current_weather_day). to eq(current_weather_day_info)
   end
+  it 'can get weather days', :vcr do
+    expect(@forecast.get_weather_days).to be_a(Array)
+    expect(@forecast.get_weather_days.count).to eq(5)
+    expect(@forecast.get_weather_days.first).to have_key(:summary)
+    expect(@forecast.get_weather_days.first).to have_key(:precip_probability)
+    expect(@forecast.get_weather_days.first).to have_key(:temp_high)
+    expect(@forecast.get_weather_days.first).to have_key(:temp_low)
+  end
 end
