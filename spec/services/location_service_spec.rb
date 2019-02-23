@@ -10,16 +10,16 @@ describe LocationService do
   end
   it 'can get latitude for a city/state' do
     location_service = LocationService.new("Denver", "CO")
-    expec(location_service.get_latitude).to eq('39.7392')
+    expect(location_service.get_latitude).to eq('39.7392358')
     
     location_service = LocationService.new("Honolulu", "HI")
-    expec(location_service.get_latitude).to eq('21.3069')
+    expect(location_service.get_latitude).to eq('21.3069444')
   end
   it 'can get longitude for a city/state' do
     location_service = LocationService.new("Denver", "CO")
-    expec(location_service.get_longitude).to eq('104.9903')
+    expect(location_service.get_longitude).to eq('-104.990251')
     
     location_service = LocationService.new("Honolulu", "HI")
-    expec(location_service.get_longitude).to eq('157.8583')
+    expect(location_service.get_longitude).to eq('-157.8583333')
   end
 end
