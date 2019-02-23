@@ -10,7 +10,7 @@ describe WeatherService do
     expect(weather_service.latitude).to eq(lat)
     expect(weather_service.longitude).to eq(long)
   end
-  it 'can get weather' do
+  it 'can get weather', :vcr do
     lat = '39.7392358'
     long = '-104.990251'
     weather_service = WeatherService.new(lat, long)

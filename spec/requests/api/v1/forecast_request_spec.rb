@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 describe 'Forecast API' do
-  it 'gets the lat/long from the city/state requested' do
+  it 'gets the lat/long from the city/state requested', :vcr do
     get '/api/v1/forecast?location=denver,co'
     
     forecast_data = JSON.parse(response.body, symbolize_names: true)
@@ -14,7 +14,7 @@ describe 'Forecast API' do
     expect(forecast_data[:data][:attributes][:longitude]).to eq(denver_long)
   end
   
-  it 'returns weather data' do
+  it 'returns weather data', :vcr do
     get '/api/v1/forecast?location=denver,co'
     
     date = Time.now.strftime('%Y-%m-%d')
