@@ -22,7 +22,7 @@ describe Forecast do
   it 'sets the date for a forecast', :vcr do
     expect(@forecast.date).to eq(Time.now.strftime('%Y-%m-%d'))
   end
-  it 'can get current_weather_day info', :vcr do
+  it 'can get current_weather info', :vcr do
     allow_any_instance_of(WeatherService).to receive(:get_weather).and_return(JSON.parse(File.read(Rails.root.join('spec/fixtures/weather_data.txt')), symbolize_names: true))
     current_weather_day_info = {
                                 temp_feels_like: 35,
@@ -33,7 +33,7 @@ describe Forecast do
                                 summary_short: 'Partly Cloudy',
                                 summary_tonight: "Light snow (< 1 in.) until afternoon."
     }
-    expect(@forecast.get_current_weather_day). to eq(current_weather_day_info)
+    expect(@forecast.get_current_weather). to eq(current_weather_day_info)
   end
   it 'can get weather days', :vcr do
     allow_any_instance_of(Forecast).to receive(:latitude).and_return('12')

@@ -29,7 +29,7 @@ describe Weather do
                                 summary_short: 'Partly Cloudy',
                                 summary_tonight: "Light snow (< 1 in.) until afternoon."
     }
-    expect(weather.current_weather_day).to eq(current_weather_day_info)
+    expect(weather.current_weather).to eq(current_weather_day_info)
   end
   
   it 'can return weather days', :vcr do

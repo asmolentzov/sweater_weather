@@ -14,8 +14,8 @@ class Forecast
     @date = set_date
   end
   
-  def get_current_weather_day
-    weather.current_weather_day
+  def get_current_weather
+    weather.current_weather
   end
   
   def get_weather_days

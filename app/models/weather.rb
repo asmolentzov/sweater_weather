@@ -8,7 +8,7 @@ class Weather
     @days_ahead = days_ahead
   end
   
-  def current_weather_day
+  def current_weather
     {
       temp_feels_like: weather_data[:currently][:apparentTemperature].round(0),
       humidity: weather_data[:currently][:humidity],

@@ -22,7 +22,7 @@ describe 'Forecast API' do
     forecast_data = JSON.parse(response.body, symbolize_names: true)
 
     expect(forecast_data[:data][:attributes][:date]).to eq(date)
-    expect(forecast_data[:data][:attributes]).to have_key(:current_weather_day)  
+    expect(forecast_data[:data][:attributes]).to have_key(:current_weather)
     expect(forecast_data[:data][:attributes]).to have_key(:weather_days)
     expect(forecast_data[:data][:attributes][:weather_days]).to be_a(Array)
     expect(forecast_data[:data][:attributes][:weather_days].count).to eq(5) 

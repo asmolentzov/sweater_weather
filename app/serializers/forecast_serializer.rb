@@ -3,8 +3,8 @@ class ForecastSerializer
   set_id :object_id
   attributes :city, :state, :latitude, :longitude, :date
   
-  attribute :current_weather_day do |object|
-    object.get_current_weather_day
+  attribute :current_weather do |object|
+    object.get_current_weather
   end
   
   attribute :weather_days do |object|
