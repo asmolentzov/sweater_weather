@@ -1,7 +1,7 @@
 class Api::V1::ForecastController < ApplicationController
   def index
     forecast = Forecast.create(forecast_params)
-    render json: 'hi'
+    render json: ForecastSerializer.new(forecast)
   end
   
   private
