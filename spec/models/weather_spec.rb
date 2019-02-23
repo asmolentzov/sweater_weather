@@ -1,6 +1,9 @@
 require 'rails_helper' 
 
 describe Weather do
+  before(:each) do
+    @weather_data = JSON.parse(File.read(Rails.root.join('spec/fixtures/weather_data.txt')), symbolize_names: true)
+  end
   it 'exists and has attributes' do
     lat = '12'
     long = '-12'
@@ -15,42 +18,8 @@ describe Weather do
     lat = '12'
     long = '-12'
     weather = Weather.new(lat, long)
-    weather_data = { "currently": {
-        "summary": "Partly Cloudy",
-        "icon": "partly-cloudy-day",
-        "temperature": 34.97,
-        "apparentTemperature": 34.97,
-        "humidity": 0.55,
-        "uvIndex": 4,
-        "visibility": 10,
-    },
-    "hourly": {
-        "summary": "Light snow later this afternoon.",
-        "icon": "snow",
-        "data": [
-            {
-                "summary": "Light Snow",
-                "temperature": 34.96,
-                "apparentTemperature": 34.96,
-                "humidity": 0.55,
-                "uvIndex": 4,
-                "visibility": 10
-            }
-        ]
-    },
-    "daily": {
-        "summary": "Snow (2–4 in.) today and next Saturday, with high temperatures peaking at 58°F on Tuesday.",
-        "icon": "snow",
-        "data": [
-            {
-                "time": 1550905200,
-                "summary": "Light snow (< 1 in.) until afternoon.",
-                "icon": "snow"
-              }
-            ]
-          }
-        }
-    allow_any_instance_of(WeatherService).to receive(:get_weather).and_return(weather_data)
+    
+    allow_any_instance_of(WeatherService).to receive(:get_weather).and_return(@weather_data)
     current_weather_day_info = {
                                 temp_feels_like: 35,
                                 humidity: 0.55,
@@ -73,7 +42,7 @@ describe Weather do
                     temp_high: 37,
                     temp_low: 18
     }
-    allow_any_instance_of(Weather).to receive(:weather_data).and_return(JSON.parse(File.read(Rails.root.join('spec/fixtures/weather_data.txt')), symbolize_names: true))
+    allow_any_instance_of(Weather).to receive(:weather_data).and_return(@weather_data)
     
     expect(weather.weather_days).to be_a(Array)
     expect(weather.weather_days.count).to eq(5)
