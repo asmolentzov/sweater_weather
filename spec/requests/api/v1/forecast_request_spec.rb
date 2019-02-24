@@ -17,11 +17,10 @@ describe 'Forecast API' do
   it 'returns weather data for current weather', :vcr do
     get '/api/v1/forecast?location=denver,co'
     
-    date = Time.now.strftime('%Y-%m-%d')
     expect(response).to be_successful
     forecast_data = JSON.parse(response.body, symbolize_names: true)
 
-    expect(forecast_data[:data][:attributes][:date]).to eq(date)
+    expect(forecast_data[:data][:attributes]).to have_key(:date)
     expect(forecast_data[:data][:attributes]).to have_key(:current_weather)
     expect(forecast_data[:data][:attributes][:current_weather]).to have_key(:temperature)
     expect(forecast_data[:data][:attributes][:current_weather]).to have_key(:temp_feels_like)
@@ -54,7 +53,7 @@ describe 'Forecast API' do
     expect(forecast_data[:data][:attributes]).to have_key(:weather_days)
     expect(forecast_data[:data][:attributes][:weather_days]).to be_a(Array)
     expect(forecast_data[:data][:attributes][:weather_days].count).to eq(5) 
-    expect(forecast_data[:data][:attributes][:weather_days].first[:date]).to eq(Time.now.strftime('%Y-%m-%d')) 
+    expect(forecast_data[:data][:attributes][:weather_days].first).to have_key(:date)
     expect(forecast_data[:data][:attributes][:weather_days].first).to have_key(:summary)
     expect(forecast_data[:data][:attributes][:weather_days].first).to have_key(:precip_probability)
     expect(forecast_data[:data][:attributes][:weather_days].first).to have_key(:precip_type)
