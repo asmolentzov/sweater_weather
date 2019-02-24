@@ -12,6 +12,6 @@ describe 'Users API' do
     
     user = User.last
     expect(user.email).to eq(email)
-    expect(user.password).to eq(password)
+    expect(user.password_digest).to_not be_nil
   end
 end
