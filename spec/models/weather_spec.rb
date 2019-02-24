@@ -65,9 +65,9 @@ describe Weather do
     long = '-12'
     weather = Weather.new(lat, long)
     weather_hour = {
-                    time: 0,
-                    temperature: 0,
-                    icon: 0
+                    time: 1550948400,
+                    temperature: 35,
+                    icon: 'snow'
     }
     allow_any_instance_of(Weather).to receive(:weather_data).and_return(@weather_data)
     expect(weather.weather_hours).to be_a(Array)
@@ -77,5 +77,6 @@ describe Weather do
       expect(hour).to have_key(:time)
       expect(hour).to have_key(:temperature)
       expect(hour).to have_key(:icon)
+    end
   end
 end
