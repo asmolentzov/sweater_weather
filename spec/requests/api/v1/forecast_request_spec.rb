@@ -41,10 +41,10 @@ describe 'Forecast API' do
     
     expect(forecast_data[:data][:attributes]).to have_key(:weather_hours)
     expect(forecast_data[:data][:attributes][:weather_hours]).to be_a(Array)
-    expect(forecast_data[:data][:attributes][:weather_hours]).to eq(8)
-    expect(forecast_data[:data][:attributes][:weather_hours]).to have_key(:time)
-    expect(forecast_data[:data][:attributes][:weather_hours]).to have_key(:temperature)
-    expect(forecast_data[:data][:attributes][:weather_hours]).to have_key(:icon)
+    expect(forecast_data[:data][:attributes][:weather_hours].count).to eq(8)
+    expect(forecast_data[:data][:attributes][:weather_hours].first).to have_key(:time)
+    expect(forecast_data[:data][:attributes][:weather_hours].first).to have_key(:temperature)
+    expect(forecast_data[:data][:attributes][:weather_hours].first).to have_key(:icon)
   end
   
   it 'returns weather data for weather days', :vcr do
