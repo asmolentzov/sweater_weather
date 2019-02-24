@@ -18,6 +18,10 @@ class Forecast
     weather.current_weather
   end
   
+  def get_weather_hours
+    weather.weather_hours
+  end
+  
   def get_weather_days
     weather.weather_days
   end
