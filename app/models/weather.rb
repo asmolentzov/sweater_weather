@@ -10,13 +10,15 @@ class Weather
   
   def current_weather
     {
-      temp_feels_like: weather_data[:currently][:apparentTemperature].round(0),
-      humidity: weather_data[:currently][:humidity],
-      visibility: weather_data[:currently][:visibility].round(2),
-      uv_index: weather_data[:currently][:uvIndex],
-      summary: today_weather[:summary],
-      summary_short: weather_data[:currently][:summary],
-      summary_tonight: today_weather[:summary]
+      temp_feels_like: current_weather_data[:apparentTemperature].round(0),
+      temp_high: today_weather_data[:temperatureHigh].round(0),
+      temp_low: today_weather_data[:temperatureLow].round(0),
+      humidity: current_weather_data[:humidity],
+      visibility: current_weather_data[:visibility].round(2),
+      uv_index: current_weather_data[:uvIndex],
+      summary: today_weather_data[:summary],
+      summary_short: current_weather_data[:summary],
+      summary_tonight: today_weather_data[:summary]
     }
   end
   
@@ -36,7 +38,11 @@ class Weather
     @weather_data ||= weather_service.get_weather
   end
   
-  def today_weather
+  def current_weather_data
+    weather_data[:currently]
+  end
+  
+  def today_weather_data
     weather_data[:daily][:data].first
   end
   
