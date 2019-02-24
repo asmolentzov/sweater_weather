@@ -23,7 +23,7 @@ describe 'Users API' do
                                   password_confirmation: password
                                 }
     expect(response.status).to eq(201)
-    result = JSON.parse(response.body)
+    result = JSON.parse(response.body, symbolize_names: true)
     expect(result).to have_key(:api_key)
     user = User.last
     expect(user.api_key).to eq(result[:api_key])
