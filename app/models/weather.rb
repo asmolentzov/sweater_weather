@@ -10,6 +10,7 @@ class Weather
   
   def current_weather
     {
+      temperature: current_weather_data[:temperature].round(0),
       temp_feels_like: current_weather_data[:apparentTemperature].round(0),
       temp_high: today_weather_data[:temperatureHigh].round(0),
       temp_low: today_weather_data[:temperatureLow].round(0),
@@ -51,6 +52,7 @@ class Weather
       date: Time.at(weather_data[:daily][:data][index][:time]).strftime('%Y-%m-%d'),
       summary: weather_data[:daily][:data][index][:icon],
       precip_probability: weather_data[:daily][:data][index][:precipProbability],
+      precip_type: weather_data[:daily][:data][index][:precipType],
       temp_high: weather_data[:daily][:data][index][:temperatureHigh].round(0),
       temp_low: weather_data[:daily][:data][index][:temperatureLow].round(0)
     }

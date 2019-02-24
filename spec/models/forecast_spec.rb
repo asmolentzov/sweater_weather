@@ -25,6 +25,7 @@ describe Forecast do
   it 'can get current_weather info', :vcr do
     allow_any_instance_of(WeatherService).to receive(:get_weather).and_return(JSON.parse(File.read(Rails.root.join('spec/fixtures/weather_data.txt')), symbolize_names: true))
     current_weather_day_info = {
+                                temperature: 35,
                                 temp_feels_like: 35,
                                 temp_high: 37,
                                 temp_low: 18,

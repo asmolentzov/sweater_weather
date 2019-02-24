@@ -21,6 +21,7 @@ describe Weather do
     
     allow_any_instance_of(WeatherService).to receive(:get_weather).and_return(@weather_data)
     current_weather_day_info = {
+                                temperature: 35,
                                 temp_feels_like: 35,
                                 temp_high: 37,
                                 temp_low: 18,
@@ -42,6 +43,7 @@ describe Weather do
                     date: '2019-02-23',
                     summary: 'snow',
                     precip_probability: 0.55,
+                    precip_type: 'snow',
                     temp_high: 37,
                     temp_low: 18
     }
