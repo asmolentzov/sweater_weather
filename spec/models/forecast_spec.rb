@@ -51,4 +51,15 @@ describe Forecast do
     expect(forecast.get_weather_days.first).to have_key(:temp_high)
     expect(forecast.get_weather_days.first).to have_key(:temp_low)
   end
+  it 'can get weather hours', :vcr do
+    allow_any_instance_of(Forecast).to receive(:latitude).and_return('12')
+    allow_any_instance_of(Forecast).to receive(:longitude).and_return('-12')
+    forecast = Forecast.new('denver,co')
+    
+    expect(forecast.get_weather_hours).to be_a(Array)
+    expect(forecast.get_weather_hours.count).to eq(8)
+    expect(forecast.get_weather_hours.first).to have_key(:time)
+    expect(forecast.get_weather_hours.first).to have_key(:temperature)
+    expect(forecast.get_weather_hours.first).to have_key(:icon)
+  end
 end
