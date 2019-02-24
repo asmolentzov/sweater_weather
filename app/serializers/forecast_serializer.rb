@@ -7,6 +7,10 @@ class ForecastSerializer
     object.get_current_weather
   end
   
+  attribute :weather_hours do |object|
+    object.get_weather_hours
+  end
+  
   attribute :weather_days do |object|
     object.get_weather_days
   end
