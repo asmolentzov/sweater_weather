@@ -6,4 +6,8 @@ class Background
     @city = split_location.first
     @state = split_location.last
   end
+  
+  def image_url
+    ImageService.new(@city, @state).get_image
+  end
 end
