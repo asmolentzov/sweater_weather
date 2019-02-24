@@ -59,4 +59,23 @@ describe Weather do
       expect(day).to have_key(:temp_low)
     end
   end
+  
+  it 'can return weather hours' do
+    lat = '12'
+    long = '-12'
+    weather = Weather.new(lat, long)
+    weather_hour = {
+                    time: 0,
+                    temperature: 0,
+                    icon: 0
+    }
+    allow_any_instance_of(Weather).to receive(:weather_data).and_return(@weather_data)
+    expect(weather.weather_hours).to be_a(Array)
+    expect(weather.weather_hours.count).to eq(8)
+    expect(weather.weather_hours.first).to eq(weather_hour)
+    weather.weather_hours.each do |hour|
+      expect(hour).to have_key(:time)
+      expect(hour).to have_key(:temperature)
+      expect(hour).to have_key(:icon)
+  end
 end
