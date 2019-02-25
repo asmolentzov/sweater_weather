@@ -21,12 +21,12 @@ describe Weather do
     
     allow_any_instance_of(WeatherService).to receive(:get_weather).and_return(@weather_data)
     current_weather_day_info = {
-                                temperature: 35,
-                                temp_feels_like: 35,
-                                temp_high: 37,
-                                temp_low: 18,
+                                temperature: 34.97,
+                                temp_feels_like: 34.97,
+                                temp_high: 37.22,
+                                temp_low: 17.63,
                                 humidity: 0.55,
-                                visibility: 10.00,
+                                visibility: 10,
                                 uv_index: 4,
                                 summary: "Light snow (< 1 in.) until afternoon.",
                                 summary_short: 'Partly Cloudy',
@@ -44,8 +44,8 @@ describe Weather do
                     summary: 'snow',
                     precip_probability: 0.55,
                     precip_type: 'snow',
-                    temp_high: 37,
-                    temp_low: 18
+                    temp_high: 37.22,
+                    temp_low: 17.63
     }
     allow_any_instance_of(Weather).to receive(:weather_data).and_return(@weather_data)
     
@@ -66,7 +66,7 @@ describe Weather do
     weather = Weather.new(lat, long)
     weather_hour = {
                     time: 1550948400,
-                    temperature: 35,
+                    temperature: 34.96,
                     icon: 'snow'
     }
     allow_any_instance_of(Weather).to receive(:weather_data).and_return(@weather_data)

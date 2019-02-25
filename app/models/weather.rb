@@ -9,12 +9,12 @@ class Weather
   
   def current_weather
     {
-      temperature: current_weather_data[:temperature].round(0),
-      temp_feels_like: current_weather_data[:apparentTemperature].round(0),
-      temp_high: today_weather_data[:temperatureHigh].round(0),
-      temp_low: today_weather_data[:temperatureLow].round(0),
+      temperature: current_weather_data[:temperature],
+      temp_feels_like: current_weather_data[:apparentTemperature],
+      temp_high: today_weather_data[:temperatureHigh],
+      temp_low: today_weather_data[:temperatureLow],
       humidity: current_weather_data[:humidity],
-      visibility: current_weather_data[:visibility].round(2),
+      visibility: current_weather_data[:visibility],
       uv_index: current_weather_data[:uvIndex],
       summary: today_weather_data[:summary],
       summary_short: current_weather_data[:summary],
@@ -55,7 +55,7 @@ class Weather
   def weather_hour(index)
     {
       time: hourly_weather_data[index][:time],
-      temperature: hourly_weather_data[index][:temperature].round(0),
+      temperature: hourly_weather_data[index][:temperature],
       icon: hourly_weather_data[index][:icon]
     }
   end
@@ -66,8 +66,8 @@ class Weather
       summary: daily_weather_data[index][:icon],
       precip_probability: daily_weather_data[index][:precipProbability],
       precip_type: daily_weather_data[index][:precipType],
-      temp_high: daily_weather_data[index][:temperatureHigh].round(0),
-      temp_low: daily_weather_data[index][:temperatureLow].round(0)
+      temp_high: daily_weather_data[index][:temperatureHigh],
+      temp_low: daily_weather_data[index][:temperatureLow]
     }
   end
   
