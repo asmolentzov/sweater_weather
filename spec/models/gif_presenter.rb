@@ -14,5 +14,7 @@ describe GifPresenter do
     
     expect(gifs.images).to be_a(Array)
     expect(gifs.images.count).to eq(5)
+    expect(gifs.images.first).to be_a(WeatherGif)
+    expect(gifs.images.last).to be_a(WeatherGif)
   end
 end

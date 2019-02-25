@@ -10,4 +10,13 @@ describe WeatherGif do
     expect(weather_gif.time).to eq(Time.new(date).to_i)
     expect(weather_gif.summary).to eq(summary)
   end
+  it 'has a gif url' do
+    date = '2019-02-25'
+    summary = 'Partly cloudy through the afternoon'
+    weather_gif = WeatherGif.new(date, summary)
+    
+    expect(weather_gif.url).to be_a(String)
+    uri = URI.parse(weather_gif.url)
+    expect(uri.host).to eq('media0.giphy.com')
+  end
 end
