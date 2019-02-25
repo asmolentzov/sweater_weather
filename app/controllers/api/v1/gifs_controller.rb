@@ -1,7 +1,6 @@
 class Api::V1::GifsController < ApplicationController
   
   def index
-    gifs = GifPresenter.new(params[:location])
-    render json: GifPresenterSerializer.new(gifs)
+    render json: GifPresenterSerializer.new(GifPresenter.new(params[:location]))
   end
 end

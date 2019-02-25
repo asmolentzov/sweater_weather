@@ -14,9 +14,20 @@ describe "Gif API" do
     expect(gifs[:data][:attributes][:images].first).to have_key(:url)
     expect(gifs[:data][:attributes][:images].first[:time]).to_not eq(gifs[:data][:attributes][:images].last[:time])
   end
+  it 'returns gifs for the weather for a different location', :vcr do
+    get '/api/v1/gifs?location=honolulu,hi'
+    
+    expect(response).to be_successful
+    gifs = JSON.parse(response.body, symbolize_names: true)
+    
+    expect(gifs[:data][:attributes]).to have_key(:images)
+    expect(gifs[:data][:attributes][:images].count).to eq(5)
+    expect(gifs[:data][:attributes][:images].first).to have_key(:time)
+    expect(gifs[:data][:attributes][:images].first).to have_key(:summary)
+    expect(gifs[:data][:attributes][:images].first).to have_key(:url)
+    expect(gifs[:data][:attributes][:images].first[:time]).to_not eq(gifs[:data][:attributes][:images].last[:time])
+  end
 end
-
-# Idea - test for time e.g. that time is different for different days
 
 
 # You will be building an API that will use weather data from the Dark Sky API in order to provide animated GIFs using the Giphy API.
