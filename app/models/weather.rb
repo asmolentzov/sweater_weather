@@ -64,6 +64,7 @@ class Weather
     {
       date: Time.at(daily_weather_data[index][:time]).strftime('%Y-%m-%d'),
       icon: daily_weather_data[index][:icon],
+      summary: daily_weather_data[index][:summary],
       precip_probability: daily_weather_data[index][:precipProbability],
       precip_type: daily_weather_data[index][:precipType],
       temp_high: daily_weather_data[index][:temperatureHigh],

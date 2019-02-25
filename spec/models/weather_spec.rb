@@ -42,6 +42,7 @@ describe Weather do
     weather_day = {
                     date: '2019-02-23',
                     icon: 'snow',
+                    summary: 'Light snow (< 1 in.) until afternoon.',
                     precip_probability: 0.55,
                     precip_type: 'snow',
                     temp_high: 37.22,

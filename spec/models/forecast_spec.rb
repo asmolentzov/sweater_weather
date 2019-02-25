@@ -47,6 +47,7 @@ describe Forecast do
     expect(forecast.get_weather_days.count).to eq(5)
     expect(forecast.get_weather_days.first).to have_key(:date)
     expect(forecast.get_weather_days.first).to have_key(:icon)
+    expect(forecast.get_weather_days.first).to have_key(:summary)
     expect(forecast.get_weather_days.first).to have_key(:precip_probability)
     expect(forecast.get_weather_days.first).to have_key(:temp_high)
     expect(forecast.get_weather_days.first).to have_key(:temp_low)
