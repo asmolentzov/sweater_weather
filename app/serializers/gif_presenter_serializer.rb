@@ -1,4 +1,4 @@
-class WeatherGifSerializer
+class GifPresenterSerializer
   include FastJsonapi::ObjectSerializer
   set_id :object_id
   attributes :images

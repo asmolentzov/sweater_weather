@@ -1,4 +1,4 @@
-class WeatherGif
+class GifPresenter
   attr_reader :location
   
   def initialize(location)
