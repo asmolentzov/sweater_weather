@@ -8,9 +8,11 @@ class GifService
   private
   
   def get_random(phrase)
-    gifs = parse(gif_search(phrase))[:data]
+    parse(gif_search(phrase))[:data][random_index]
+  end
+  
+  def random_index
     index = rand(0...DefaultCount)
-    gifs[index]
   end
   
   def parse(json)
