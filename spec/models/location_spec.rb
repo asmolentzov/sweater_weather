@@ -10,5 +10,6 @@ describe Location do
   
   describe 'Relationships' do
     it { should have_many(:favorites) }
+    it { should belong_to(:current_weather) }
   end
 end

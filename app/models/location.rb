@@ -5,4 +5,5 @@ class Location < ApplicationRecord
   validates_presence_of :longitude
   
   has_many :favorites
+  belongs_to :current_weather
 end
