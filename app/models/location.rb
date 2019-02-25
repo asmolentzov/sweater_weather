@@ -3,4 +3,6 @@ class Location < ApplicationRecord
   validates_presence_of :state
   validates_presence_of :latitude
   validates_presence_of :longitude
+  
+  has_many :favorites
 end
