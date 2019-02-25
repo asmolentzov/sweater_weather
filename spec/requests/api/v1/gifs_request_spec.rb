@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 describe "Gif API" do
-  it 'returns gifs for the weather for the requested location' do
+  it 'returns gifs for the weather for the requested location', :vcr do
     get '/api/v1/gifs?location=denver,co'
     
     expect(response).to be_successful
