@@ -2,11 +2,9 @@ class Weather
   
   attr_reader :latitude, :longitude
   
-  def initialize(latitude, longitude, days = 5, hours = 8)
+  def initialize(latitude, longitude)
     @latitude = latitude
     @longitude = longitude
-    @days = days
-    @hours = hours
   end
   
   def current_weather
@@ -24,14 +22,14 @@ class Weather
     }
   end
   
-  def weather_hours
-    (0...@hours).map do |hour_index|
+  def weather_hours(hours)
+    (0...hours).map do |hour_index|
       weather_hour(hour_index)
     end
   end
   
-  def weather_days
-    (0...@days).map do |day_index|
+  def weather_days(days)
+    (0...days).map do |day_index|
       weather_day(day_index)
     end
   end

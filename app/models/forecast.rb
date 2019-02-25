@@ -1,4 +1,7 @@
 class Forecast
+  DaysAhead = 5
+  HoursAhead = 8
+  
   attr_reader :city,
               :state,
               :latitude,
@@ -19,11 +22,11 @@ class Forecast
   end
   
   def get_weather_hours
-    weather.weather_hours
+    weather.weather_hours(HoursAhead)
   end
   
   def get_weather_days
-    weather.weather_days
+    weather.weather_days(DaysAhead)
   end
   
   private
