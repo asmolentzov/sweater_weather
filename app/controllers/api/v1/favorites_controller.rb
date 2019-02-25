@@ -1,10 +1,14 @@
 class Api::V1::FavoritesController < ApplicationController
   before_action :require_authorization
   def create
-    
+    current_user.favorites.create(location: params[:location])
   end
   
   private
+  
+  def current_user
+    User.find_by(api_key: params[:api_key])
+  end
   
   def require_authorization
     unless authorized
@@ -13,6 +17,6 @@ class Api::V1::FavoritesController < ApplicationController
   end
   
   def authorized
-    params[:api_key] && User.find_by(api_key: params[:api_key])
+    params[:api_key] && current_user
   end
 end

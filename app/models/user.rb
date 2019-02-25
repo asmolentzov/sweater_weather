@@ -4,6 +4,8 @@ class User < ApplicationRecord
   
   has_secure_password
   
+  has_many :favorites
+  
   before_create :set_api_key
   
   private
