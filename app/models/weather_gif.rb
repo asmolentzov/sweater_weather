@@ -7,10 +7,7 @@ class WeatherGif
   
   def url
     GifService.new.get_gif(summary)
-    conn = Faraday.new('https://api.giphy.com') do |faraday|
-      faraday.params[:api_key] = ENV['giphy_api_key']
-      faraday.adapter Faraday.default_adapter
-    end
+    
     
     response = conn.get('/v1/gifs/search') do |f|
       f.params[:q] = summary
