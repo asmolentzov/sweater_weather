@@ -54,6 +54,7 @@ describe 'Forecast API' do
     expect(forecast_data[:data][:attributes][:weather_days]).to be_a(Array)
     expect(forecast_data[:data][:attributes][:weather_days].count).to eq(5) 
     expect(forecast_data[:data][:attributes][:weather_days].first).to have_key(:date)
+    expect(forecast_data[:data][:attributes][:weather_days].first).to have_key(:icon)
     expect(forecast_data[:data][:attributes][:weather_days].first).to have_key(:summary)
     expect(forecast_data[:data][:attributes][:weather_days].first).to have_key(:precip_probability)
     expect(forecast_data[:data][:attributes][:weather_days].first).to have_key(:precip_type)

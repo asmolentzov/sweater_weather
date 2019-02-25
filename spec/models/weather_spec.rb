@@ -41,7 +41,8 @@ describe Weather do
     weather = Weather.new(lat, long)
     weather_day = {
                     date: '2019-02-23',
-                    summary: 'snow',
+                    icon: 'snow',
+                    summary: 'Light snow (< 1 in.) until afternoon.',
                     precip_probability: 0.55,
                     precip_type: 'snow',
                     temp_high: 37.22,
@@ -53,7 +54,7 @@ describe Weather do
     expect(weather.weather_days(5).count).to eq(5)
     expect(weather.weather_days(5).first).to eq(weather_day)
     weather.weather_days(5).each do |day|
-      expect(day).to have_key(:summary)
+      expect(day).to have_key(:icon)
       expect(day).to have_key(:precip_probability)
       expect(day).to have_key(:temp_high)
       expect(day).to have_key(:temp_low)
