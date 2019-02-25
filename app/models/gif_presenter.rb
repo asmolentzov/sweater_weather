@@ -1,8 +1,9 @@
 class GifPresenter
-  attr_reader :location
+  attr_reader :location, :copyright
   
   def initialize(location)
     @location = location
+    @copyright = Time.now.strftime('%Y')
   end
   
   def images
