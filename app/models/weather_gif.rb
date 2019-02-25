@@ -1,11 +1,8 @@
 class WeatherGif
-  attr_reader :time, :summary
+  attr_reader :time, :summary, :url
   def initialize(date, summary)
-    @time = Time.new(date).to_i
+    @time = Time.parse(date).to_i
     @summary = summary
-  end
-  
-  def url
-    GifService.new.get_gif(summary)
+    @url = GifService.new.get_gif(summary)
   end
 end
