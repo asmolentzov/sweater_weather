@@ -7,10 +7,14 @@ class GifPresenter
   end
   
   def images
-    forecast = Forecast.new(location)
-    weather_days = forecast.get_weather_days
     weather_days.map do |weather|
       WeatherGif.new(weather[:date], weather[:summary])
     end
+  end
+  
+  private
+  
+  def weather_days
+    @_weather_days ||= Forecast.new(location).get_weather_days
   end
 end

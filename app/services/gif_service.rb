@@ -1,9 +1,17 @@
 class GifService
+  DefaultCount = 10
+  
   def get_gif(phrase)
-    parse(gif_search(phrase))[:data].first[:images][:fixed_width][:url]
+    get_random(phrase)
   end
   
   private
+  
+  def get_random(phrase)
+    gifs = parse(gif_search(phrase))
+    index = rand(0...DefaultCount)
+    gifs[index]
+  end
   
   def parse(json)
     JSON.parse(json.body, symbolize_names: true)
@@ -12,7 +20,7 @@ class GifService
   def gif_search(phrase)
     conn.get('/v1/gifs/search') do |f|
       f.params[:q] = phrase
-      f.params[:limit] = 1
+      f.params[:limit] = DefaultCount
     end
   end
   
