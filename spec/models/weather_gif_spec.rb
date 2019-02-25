@@ -8,6 +8,6 @@ describe WeatherGif do
     
     expect(weather_gif).to be_a(WeatherGif)
     expect(weather_gif.time).to eq(Time.new(date).to_i)
-    expect(weather_gif.weather_summary).to eq(summary)
+    expect(weather_gif.summary).to eq(summary)
   end
 end

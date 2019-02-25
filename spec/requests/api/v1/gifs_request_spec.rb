@@ -7,12 +7,12 @@ describe "Gif API" do
     expect(response).to be_successful
     gifs = JSON.parse(response.body, symbolize_names: true)
     
-    expect(gifs[:data]).to have_key(:images)
-    expect(gifs[:data][:images].count).to eq(5)
-    expect(gifs[:data][:images].first).to have_key(:time)
-    expect(gifs[:data][:images].first).to have_key(:summary)
-    expect(gifs[:data][:images].first).to have_key(:url)
-    expect(gifs[:data][:images].first[:time]).to_not eq(gifs[:data][:images].last[:time])
+    expect(gifs[:data][:attributes]).to have_key(:images)
+    expect(gifs[:data][:attributes][:images].count).to eq(5)
+    expect(gifs[:data][:attributes][:images].first).to have_key(:time)
+    expect(gifs[:data][:attributes][:images].first).to have_key(:summary)
+    expect(gifs[:data][:attributes][:images].first).to have_key(:url)
+    expect(gifs[:data][:attributes][:images].first[:time]).to_not eq(gifs[:data][:attributes][:images].last[:time])
   end
 end
 
