@@ -49,6 +49,8 @@ describe 'Favorites API' do
     
     expect(response.status).to eq(200)
     favorites = JSON.parse(response.body, symbolize_names: true)
+    
+    require 'pry'; binding.pry
     expect(favorites).to be_a(Array)
     expect(favorites.first).to be_a(Hash)
     expect(favorites.first).to have_key(:location)
