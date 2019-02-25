@@ -8,7 +8,8 @@ class Api::V1::FavoritesController < ApplicationController
   end
   
   def create
-    current_user.favorites.create(location: params[:location])
+    location = Location.find(params[:location])
+    current_user.favorites.create(location: location)
   end
   
   private

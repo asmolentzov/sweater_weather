@@ -20,9 +20,9 @@ describe 'Favorites API' do
   end
   it 'creates a favorite' do
     user = User.create(email: 'email', password: 'password')
-    location = 'Denver, CO'
+    location = Location.create(city: 'Denver', state: 'CO', latitude: '12', longitude: '-12')
     post '/api/v1/favorites', params: {
-                                        location: location,
+                                        location: location.id,
                                         api_key: user.api_key
                                       }
     expect(response).to be_successful
@@ -40,8 +40,8 @@ describe 'Favorites API' do
   end
   it 'returns a list of a users favorites' do
     user = User.create(email: 'email', password: 'password')
-    location = 'Denver, CO'
-    location_2 = 'Honolulu, HI'
+    location = Location.create(city: 'Denver', state: 'CO', latitude: '12', longitude: '-12')
+    location_2 = Location.create(city: 'Honolulu', state: 'HI', latitude: '12', longitude: '-12')
     user.favorites.create(location: location)
     user.favorites.create(location: location_2)
     get '/api/v1/favorites', params: { api_key: user.api_key }
