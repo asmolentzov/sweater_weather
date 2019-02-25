@@ -7,4 +7,8 @@ describe Location do
     it { should validate_presence_of(:latitude) }
     it { should validate_presence_of(:longitude) }
   end
+  
+  describe 'Relationships' do
+    it { should have_many(:favorites) }
+  end
 end
