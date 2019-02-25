@@ -2,13 +2,13 @@ class GifService
   DefaultCount = 10
   
   def get_gif(phrase)
-    get_random(phrase)
+    get_random(phrase)[:images][:fixed_width][:url]
   end
   
   private
   
   def get_random(phrase)
-    gifs = parse(gif_search(phrase))
+    gifs = parse(gif_search(phrase))[:data]
     index = rand(0...DefaultCount)
     gifs[index]
   end
