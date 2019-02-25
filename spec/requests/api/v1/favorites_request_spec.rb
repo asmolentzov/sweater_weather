@@ -36,8 +36,7 @@ describe 'Favorites API' do
     
     expect(response.status).to eq(200)
     favorites = JSON.parse(response.body, symbolize_names: true)
-    expect(favorites).to be_a(Array)
-    expect(favorites).to be_empty
+    expect(favorites[:data]).to be_empty
   end
   it 'returns a list of a users favorites' do
     user = User.create(email: 'email', password: 'password')
@@ -49,8 +48,8 @@ describe 'Favorites API' do
     
     expect(response.status).to eq(200)
     favorites = JSON.parse(response.body, symbolize_names: true)
-    
     require 'pry'; binding.pry
+    
     expect(favorites).to be_a(Array)
     expect(favorites.first).to be_a(Hash)
     expect(favorites.first).to have_key(:location)
