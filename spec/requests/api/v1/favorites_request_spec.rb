@@ -18,4 +18,16 @@ describe 'Favorites API' do
     expect(response.status).to eq(401)
     expect(response.body).to eq('{}')
   end
+  it 'creates a favorite' do
+    user = User.create(email: 'email', password: 'password')
+    location = 'Denver, CO'
+    post '/api/v1/favorites', params: {
+                                        location: location,
+                                        api_key: user.api_key
+                                      }
+    expect(response).to be_successful
+    favorite = Favorite.last
+    expect(favorite.location).to eq(location)
+    expect(favorite.user).to eq(user)
+  end
 end
