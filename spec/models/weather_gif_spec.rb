@@ -8,7 +8,7 @@ describe WeatherGif do
     expect(weather_gif.location).to eq(location)
   end
   
-  it 'has images' do
+  it 'has images', :vcr do
     location = 'denver,co'
     weather_gif = WeatherGif.new(location)
     
