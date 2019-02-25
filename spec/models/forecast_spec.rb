@@ -3,19 +3,26 @@ require 'rails_helper'
 describe Forecast do
   before(:each) do
     location = 'denver,co'
-    @forecast = Forecast.new(location)
+    @forecast = Forecast.new(location: location)
   end
   it 'exists and has basic attributes', :vcr do
     expect(@forecast).to be_a(Forecast)
     expect(@forecast.city).to eq('Denver')
     expect(@forecast.state).to eq('CO')
   end
+  it 'can take location or city/state/lat/long in creating a forecast', :vcr do
+    city = 'Denver'
+    state = 'CO'
+    latitude = '39.7392358'
+    longitude = '-104.990251'
+    forecast = Forecast.new(city: city, state: state, latitude: latitude, longitude: longitude)
+  end
   it 'sets the latitude and longitude for a forecast', :vcr do
     expect(@forecast.latitude).to eq('39.7392358')
     expect(@forecast.longitude).to eq('-104.990251')
     
     hawaii_location = 'honolulu,hi'
-    hawaii_forecast = Forecast.new(hawaii_location)
+    hawaii_forecast = Forecast.new(location: hawaii_location)
     expect(hawaii_forecast.latitude).to eq('21.3069444')
     expect(hawaii_forecast.longitude).to eq('-157.8583333')
   end
@@ -41,7 +48,7 @@ describe Forecast do
   it 'can get weather days', :vcr do
     allow_any_instance_of(Forecast).to receive(:latitude).and_return('12')
     allow_any_instance_of(Forecast).to receive(:longitude).and_return('-12')
-    forecast = Forecast.new('denver,co')
+    forecast = Forecast.new(location: 'denver,co')
 
     expect(forecast.get_weather_days).to be_a(Array)
     expect(forecast.get_weather_days.count).to eq(5)
@@ -55,7 +62,7 @@ describe Forecast do
   it 'can get weather hours', :vcr do
     allow_any_instance_of(Forecast).to receive(:latitude).and_return('12')
     allow_any_instance_of(Forecast).to receive(:longitude).and_return('-12')
-    forecast = Forecast.new('denver,co')
+    forecast = Forecast.new(location: 'denver,co')
     
     expect(forecast.get_weather_hours).to be_a(Array)
     expect(forecast.get_weather_hours.count).to eq(8)

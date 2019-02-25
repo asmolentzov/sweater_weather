@@ -8,12 +8,12 @@ class Forecast
               :longitude,
               :date
               
-  def initialize(location)
-    location = location.split(',')
-    @city = location[0].capitalize
-    @state = location[1].upcase
-    @latitude = set_latitude
-    @longitude = set_longitude
+  def initialize(location: nil, city: nil, state: nil, latitude: nil, longitude: nil)
+    location = location.split(',') if location
+    @city = city || location[0].capitalize
+    @state = state || location[1].upcase
+    @latitude = latitude || set_latitude
+    @longitude = longitude || set_longitude
     @date = set_date
   end
   
