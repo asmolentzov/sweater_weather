@@ -54,20 +54,28 @@ class Weather
   
   def weather_hour(index)
     {
-      time: weather_data[:hourly][:data][index][:time],
-      temperature: weather_data[:hourly][:data][index][:temperature].round(0),
-      icon: weather_data[:hourly][:data][index][:icon]
+      time: hourly_weather_data[index][:time],
+      temperature: hourly_weather_data[index][:temperature].round(0),
+      icon: hourly_weather_data[index][:icon]
     }
   end
   
   def weather_day(index)
     {
-      date: Time.at(weather_data[:daily][:data][index][:time]).strftime('%Y-%m-%d'),
-      summary: weather_data[:daily][:data][index][:icon],
-      precip_probability: weather_data[:daily][:data][index][:precipProbability],
-      precip_type: weather_data[:daily][:data][index][:precipType],
-      temp_high: weather_data[:daily][:data][index][:temperatureHigh].round(0),
-      temp_low: weather_data[:daily][:data][index][:temperatureLow].round(0)
+      date: Time.at(daily_weather_data[index][:time]).strftime('%Y-%m-%d'),
+      summary: daily_weather_data[index][:icon],
+      precip_probability: daily_weather_data[index][:precipProbability],
+      precip_type: daily_weather_data[index][:precipType],
+      temp_high: daily_weather_data[index][:temperatureHigh].round(0),
+      temp_low: daily_weather_data[index][:temperatureLow].round(0)
     }
+  end
+  
+  def daily_weather_data
+    weather_data[:daily][:data]
+  end
+  
+  def hourly_weather_data
+    weather_data[:hourly][:data]
   end
 end
