@@ -12,8 +12,11 @@ class Forecast
     location = location.split(',') if location
     @city = city || location[0].capitalize
     @state = state || location[1].upcase
-    @latitude = latitude || set_latitude
-    @longitude = longitude || set_longitude
+    @location = set_location
+    @latitude = @location.latitude
+    # @latitude = latitude || set_latitude
+    @longitude = @location.longitude
+    # @longitude = longitude || set_longitude
     @date = set_date
   end
   
@@ -30,6 +33,14 @@ class Forecast
   end
   
   private
+  
+  def set_location
+    if location = Location.find_by(city: @city, state: @state)
+      @location = location
+    else
+      Location.create(city: @city, state: @state, latitude: set_latitude, longitude: set_longitude)
+    end
+  end
   
   def weather
     @weather ||= Weather.new(@latitude, @longitude)

@@ -26,11 +26,15 @@ ActiveRecord::Schema.define(version: 2019_02_25_224122) do
     t.string "summary"
     t.string "summary_short"
     t.string "summary_tonight"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "favorites", force: :cascade do |t|
     t.string "location"
     t.bigint "user_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.bigint "location_id"
     t.index ["location_id"], name: "index_favorites_on_location_id"
     t.index ["user_id"], name: "index_favorites_on_user_id"
@@ -41,6 +45,8 @@ ActiveRecord::Schema.define(version: 2019_02_25_224122) do
     t.string "state"
     t.string "latitude"
     t.string "longitude"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
     t.bigint "current_weather_id"
     t.index ["current_weather_id"], name: "index_locations_on_current_weather_id"
   end

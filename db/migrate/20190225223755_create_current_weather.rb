@@ -11,6 +11,8 @@ class CreateCurrentWeather < ActiveRecord::Migration[5.2]
       t.string :summary
       t.string :summary_short
       t.string :summary_tonight
+      
+      t.timestamps
     end
   end
 end
