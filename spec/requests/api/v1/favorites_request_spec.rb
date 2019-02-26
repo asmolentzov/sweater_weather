@@ -104,11 +104,12 @@ describe 'Favorites API' do
                                         }
     expect(response.status).to eq(200)
     favorites = JSON.parse(response.body, symbolize_names: true)[:data]
-    expect(favorites.count).to eq(1)
-    expect(favorites.first[:attributes]).to have_key(:location)
-    expect(favorites.first[:attributes][:location]).to eq("#{delete_location.city}, #{delete_location.state}")
-    expect(favorites.first[:attributes]).to have_key(:current_weather)
-    expect(favorites.first[:attributes][:current_weather]).to have_key(:temperature)
+    expect(favorites).to be_a(Hash)
+    expect(favorites[:id]).to eq(delete_favorite.id.to_s)
+    expect(favorites[:attributes]).to have_key(:location)
+    expect(favorites[:attributes][:location]).to eq("#{delete_location.city}, #{delete_location.state}")
+    expect(favorites[:attributes]).to have_key(:current_weather)
+    expect(favorites[:attributes][:current_weather]).to have_key(:temperature)
     expect(Favorite.all.count).to eq(1)
     expect(Favorite.all).to eq([favorite_1])
     expect(Location.all.count).to eq(2)
