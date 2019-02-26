@@ -23,5 +23,14 @@ describe 'Sessions API' do
     expect(response.status).to eq(401)
     result = JSON.parse(response.body, symbolize_names: true)
     expect(result).to_not have_key(:api_key)
+    
+    user = User.create(email: 'email@example.com', password: 'password')
+    post '/api/v1/sessions', params: {
+                                      email: user.email,
+                                      password: 'not-password'
+    }
+    expect(response.status).to eq(401)
+    result = JSON.parse(response.body, symbolize_names: true)
+    expect(result).to_not have_key(:api_key)
   end
 end
