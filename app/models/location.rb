@@ -5,13 +5,13 @@ class Location < ApplicationRecord
   validates_presence_of :longitude
   
   has_many :favorites
-  belongs_to :current_weather
+  belongs_to :current_weather, optional: true
   
   after_commit :get_current_weather
   
   private
   
   def get_current_weather
-    CurrentWeather.create(Forecast.new(city: city, state: state, latitude: latitude, longitude: longitude).get_current_weather)
+    self.current_weather = CurrentWeather.create(Forecast.new(city: city, state: state, latitude: latitude, longitude: longitude).get_current_weather)
   end
 end

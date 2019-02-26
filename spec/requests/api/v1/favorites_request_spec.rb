@@ -18,7 +18,7 @@ describe 'Favorites API' do
     expect(response.status).to eq(401)
     expect(response.body).to eq('{}')
   end
-  it 'creates a favorite' do
+  it 'creates a favorite', :vcr do
     user = User.create(email: 'email', password: 'password')
     location = Location.create(city: 'Denver', state: 'CO', latitude: '12', longitude: '-12')
     post '/api/v1/favorites', params: {
@@ -38,7 +38,7 @@ describe 'Favorites API' do
     favorites = JSON.parse(response.body, symbolize_names: true)
     expect(favorites[:data]).to be_empty
   end
-  it 'returns a list of a users favorites' do
+  it 'returns a list of a users favorites', :vcr do
     user = User.create(email: 'email', password: 'password')
     location = Location.create(city: 'Denver', state: 'CO', latitude: '12', longitude: '-12')
     location_2 = Location.create(city: 'Honolulu', state: 'HI', latitude: '12', longitude: '-12')
@@ -48,7 +48,6 @@ describe 'Favorites API' do
     
     expect(response.status).to eq(200)
     favorites = JSON.parse(response.body, symbolize_names: true)
-    require 'pry'; binding.pry
     
     expect(favorites).to be_a(Array)
     expect(favorites.first).to be_a(Hash)
