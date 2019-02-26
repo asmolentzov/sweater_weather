@@ -37,10 +37,10 @@ class Forecast
   private
   
   def set_location
-    if location = Location.find_by(city: @city, state: @state)
-      @location = location
-    else
-      Location.create(city: @city, state: @state, latitude: latitude, longitude: longitude, current_weather: CurrentWeather.create(weather.current_weather))
+    Location.find_or_create_by(city: city, state: state) do |l|
+      l.latitude = latitude
+      l.longitude = longitude
+      l.current_weather = CurrentWeather.create(weather.current_weather)
     end
   end
   
