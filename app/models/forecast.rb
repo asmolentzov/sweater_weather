@@ -4,8 +4,6 @@ class Forecast
   
   attr_reader :city,
               :state,
-              :latitude,
-              :longitude,
               :date
               
   def initialize(location: nil, city: nil, state: nil, latitude: nil, longitude: nil)
@@ -13,9 +11,15 @@ class Forecast
     @city = city || location[0].capitalize
     @state = state || location[1].upcase
     @location = set_location
-    @latitude = @location.latitude
-    @longitude = @location.longitude
     @date = set_date
+  end
+  
+  def latitude
+    @_latitude ||= location_service.get_latitude
+  end
+  
+  def longitude
+    @_longitude ||= location_service.get_longitude
   end
   
   def get_current_weather
@@ -36,20 +40,12 @@ class Forecast
     if location = Location.find_by(city: @city, state: @state)
       @location = location
     else
-      Location.create(city: @city, state: @state, latitude: set_latitude, longitude: set_longitude)
+      Location.create(city: @city, state: @state, latitude: latitude, longitude: longitude, current_weather: CurrentWeather.create(weather.current_weather))
     end
   end
   
   def weather
-    @weather ||= Weather.new(@latitude, @longitude)
-  end
-  
-  def set_latitude
-    location_service.get_latitude
-  end
-  
-  def set_longitude
-    location_service.get_longitude
+    @weather ||= Weather.new(latitude, longitude)
   end
   
   def set_date

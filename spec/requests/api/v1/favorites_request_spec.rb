@@ -20,7 +20,7 @@ describe 'Favorites API' do
   end
   it 'creates a favorite', :vcr do
     user = User.create(email: 'email', password: 'password')
-    location = Location.create(city: 'Denver', state: 'CO', latitude: '12', longitude: '-12')
+    location = create(:location)
     post '/api/v1/favorites', params: {
                                         location: location.id,
                                         api_key: user.api_key
