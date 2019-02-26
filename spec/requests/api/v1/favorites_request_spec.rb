@@ -42,12 +42,10 @@ describe 'Favorites API' do
     user = User.create(email: 'email', password: 'password')
     location = create(:location)
     user.favorites.create(location: location)
-    
     get '/api/v1/favorites', params: { api_key: user.api_key }
     
     expect(response.status).to eq(200)
     favorites = JSON.parse(response.body, symbolize_names: true)[:data]
-    
     expect(favorites).to be_a(Array)
     expect(favorites.first).to be_a(Hash)
     expect(favorites.first[:attributes]).to have_key(:location)
@@ -70,12 +68,10 @@ describe 'Favorites API' do
     location_2 = create(:location)
     user.favorites.create(location: location)
     user.favorites.create(location: location_2)
-    
     get '/api/v1/favorites', params: { api_key: user.api_key }
     
     expect(response.status).to eq(200)
     favorites = JSON.parse(response.body, symbolize_names: true)[:data]
-    
     expect(favorites).to be_a(Array)
     expect(favorites.first).to be_a(Hash)
     expect(favorites.first[:attributes]).to have_key(:location)
@@ -85,16 +81,57 @@ describe 'Favorites API' do
   end
   it 'does not return a list of favorites when incorrect API key' do
     user = User.create(email: 'email', password: 'password')
-    
     get '/api/v1/favorites', params: { api_key: 'not api key' }
     
     expect(response.status).to eq(401)
   end
   it 'does not return a list of favorites when no API key' do
-    user = User.create(email: 'email', password: 'password')
-    
+    user = User.create(email: 'email', password: 'password')    
     get '/api/v1/favorites', params: { api_key: nil }
+
+    expect(response.status).to eq(401)
+  end
+  it 'can delete favorites' do
+    user = User.create(email: 'email', password: 'password')
+    location_1 = create(:location)
+    location_2 = create(:location)
+    favorite_1 = user.favorites.create(location: location_1)
+    favorite_2 = user.favorites.create(location: location_2)
     
+    delete '/api/v1/favorites', params: {
+                                          location: location_1.id,
+                                          api_key: user.api_key
+                                        }
+    expect(response.status).to eq(200)
+    favorites = JSON.parse(response.body, symbolize_names: true)[:data]
+    expect(favorites).to be_a(Array)
+    expect(favorites.first).to be_a(Hash)
+    expect(favorites.first[:attributes]).to have_key(:location)
+    expect(favorites.last[:attributes][:location]).to eq("#{location_1.city}, #{location_1.state}")
+    expect(favorites.last[:attributes]).to have_key(:current_weather)
+    expect(favorites.last[:attributes][:current_weather]).to have_key(:temperature)
+    expect(Favorite.all.count).to eq(1)
+    expect(Favorite.all).to eq([favorite_2])
+    expect(Location.all.count).to eq(2)
+  end
+  it 'does not delete favorite if request has wrong api key' do
+    user = User.create(email: 'email', password: 'password')
+    location_1 = create(:location)
+    favorite_1 = user.favorites.create(location: location_1)
+    
+    delete '/api/v1/favorites', params: { 
+                                          location: location_1.id,
+                                          api_key: 'not api key' }
+    expect(response.status).to eq(401)
+  end
+  it 'does not delete favorite if request does not have api key' do
+    user = User.create(email: 'email', password: 'password')
+    location_1 = create(:location)
+    favorite_1 = user.favorites.create(location: location_1)
+    
+    delete '/api/v1/favorites', params: { 
+                                          location: location_1.id,
+                                        }
     expect(response.status).to eq(401)
   end
 end
