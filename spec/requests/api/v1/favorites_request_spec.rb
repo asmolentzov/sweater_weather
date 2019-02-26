@@ -81,4 +81,18 @@ describe 'Favorites API' do
     expect(favorites.last[:attributes][:location]).to eq("#{location.city}, #{location.state}")
     expect(favorites.last[:attributes]).to have_key(:current_weather)
   end
+  it 'does not return a list of favorites when incorrect API key' do
+    user = User.create(email: 'email', password: 'password')
+    
+    get '/api/v1/favorites', params: { api_key: 'not api key' }
+    
+    expect(response.status).to eq(401)
+  end
+  it 'does not return a list of favorites when no API key' do
+    user = User.create(email: 'email', password: 'password')
+    
+    get '/api/v1/favorites', params: { api_key: nil }
+    
+    expect(response.status).to eq(401)
+  end
 end
