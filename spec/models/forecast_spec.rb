@@ -74,12 +74,19 @@ describe Forecast do
     expect(forecast.get_weather_hours.first).to have_key(:temperature)
     expect(forecast.get_weather_hours.first).to have_key(:icon)
   end
-  it 'finds or creates location record', :vcr do
+  it 'creates location record if needed', :vcr do
     location = 'denver,co'
     Forecast.new(location: location)
     
     loc = Location.last
-    loc.city = 'Denver'
-    loc.state = 'CO'
+    expect(loc.city).to eq('Denver')
+    expect(loc.state).to eq('CO')
+  end
+  it 'finds existing location record if present', :vcr do
+    location = create(:location)
+    loc_string = "#{location.city},#{location.state}"
+    Forecast.new(location: loc_string)
+    
+    expect(Location.last).to eq(location)
   end
 end

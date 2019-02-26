@@ -14,9 +14,7 @@ class Forecast
     @state = state || location[1].upcase
     @location = set_location
     @latitude = @location.latitude
-    # @latitude = latitude || set_latitude
     @longitude = @location.longitude
-    # @longitude = longitude || set_longitude
     @date = set_date
   end
   
