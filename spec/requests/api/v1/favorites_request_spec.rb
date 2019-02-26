@@ -40,8 +40,9 @@ describe 'Favorites API' do
   end
   it 'returns a list of a users favorites when one favorite', :vcr do
     user = User.create(email: 'email', password: 'password')
-    location = Location.create(city: 'Denver', state: 'CO', latitude: '39.7392358', longitude: '-104.990251')
+    location = create(:location)
     user.favorites.create(location: location)
+    
     get '/api/v1/favorites', params: { api_key: user.api_key }
     
     expect(response.status).to eq(200)
@@ -80,6 +81,7 @@ describe 'Favorites API' do
     expect(favorites.first[:attributes]).to have_key(:location)
     expect(favorites.last[:attributes][:location]).to eq("#{location.city}, #{location.state}")
     expect(favorites.last[:attributes]).to have_key(:current_weather)
+    expect(favorites.last[:attributes][:current_weather]).to have_key(:temperature)
   end
   it 'does not return a list of favorites when incorrect API key' do
     user = User.create(email: 'email', password: 'password')

@@ -1,10 +1,6 @@
 require 'rails_helper'
 
 describe Forecast do
-  # before(:each) do
-  #   location = 'denver,co'
-  #   forecast = Forecast.new(location: location)
-  # end
   it 'exists and has basic attributes', :vcr do
     location = 'denver,co'
     forecast = Forecast.new(location: location)
