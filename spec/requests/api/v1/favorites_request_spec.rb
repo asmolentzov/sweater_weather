@@ -97,4 +97,39 @@ describe 'Favorites API' do
     
     expect(response.status).to eq(401)
   end
+  it 'can delete favorites' do
+    user = User.create(email: 'email', password: 'password')
+    location_1 = create(:location)
+    location_2 = create(:location)
+    favorite_1 = user.favorites.create(location: location_1)
+    favorite_2 = user.favorites.create(location: location_2)
+    
+    delete '/api/v1/favorites', params: {
+                                          location: location_1.id,
+                                          api_key: user.api_key
+                                        }
+    
+    expect(response.status).to eq(200)
+    favorites = JSON.parse(response.body, symbolize_names: true)[:data]
+    expect(favorites).to be_a(Array)
+    expect(favorites.first).to be_a(Hash)
+    expect(favorites.first[:attributes]).to have_key(:location)
+    expect(favorites.last[:attributes][:location]).to eq("#{location_1.city}, #{location_1.state}")
+    expect(favorites.last[:attributes]).to have_key(:current_weather)
+    expect(favorites.last[:attributes][:current_weather]).to have_key(:temperature)
+    expect(Favorite.all.count).to eq(1)
+    expect(Favorite.all).to eq([favorite_2])
+    expect(Location.all.count).to eq(2)
+  end
 end
+# 
+# DELETE /api/v1/favorites
+# Content-Type: application/json
+# Accept: application/json
+# 
+# body:
+# 
+# {
+#   "location": "Denver, CO", # If you decide to store cities in your database you can send an id if you prefer
+#   "api_key": "jgn983hy48thw9begh98h4539h4"
+# }
