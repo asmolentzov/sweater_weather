@@ -10,15 +10,44 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_02_25_023954) do
+ActiveRecord::Schema.define(version: 2019_02_26_024631) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
+  create_table "current_weathers", force: :cascade do |t|
+    t.float "temperature"
+    t.float "temp_feels_like"
+    t.float "temp_high"
+    t.float "temp_low"
+    t.float "humidity"
+    t.float "visibility"
+    t.float "uv_index"
+    t.string "summary"
+    t.string "summary_short"
+    t.string "summary_tonight"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "favorites", force: :cascade do |t|
-    t.string "location"
     t.bigint "user_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.bigint "location_id"
+    t.index ["location_id"], name: "index_favorites_on_location_id"
     t.index ["user_id"], name: "index_favorites_on_user_id"
+  end
+
+  create_table "locations", force: :cascade do |t|
+    t.string "city"
+    t.string "state"
+    t.string "latitude"
+    t.string "longitude"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.bigint "current_weather_id"
+    t.index ["current_weather_id"], name: "index_locations_on_current_weather_id"
   end
 
   create_table "users", force: :cascade do |t|
@@ -29,5 +58,7 @@ ActiveRecord::Schema.define(version: 2019_02_25_023954) do
     t.string "api_key"
   end
 
+  add_foreign_key "favorites", "locations"
   add_foreign_key "favorites", "users"
+  add_foreign_key "locations", "current_weathers"
 end

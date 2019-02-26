@@ -1,18 +1,18 @@
 require 'rails_helper'
 
 describe Forecast do
-  before(:each) do
-    location = 'denver,co'
-    @forecast = Forecast.new(location)
-  end
   it 'exists and has basic attributes', :vcr do
-    expect(@forecast).to be_a(Forecast)
-    expect(@forecast.city).to eq('Denver')
-    expect(@forecast.state).to eq('CO')
+    location = 'denver,co'
+    forecast = Forecast.new(location)
+    expect(forecast).to be_a(Forecast)
+    expect(forecast.city).to eq('Denver')
+    expect(forecast.state).to eq('CO')
   end
   it 'sets the latitude and longitude for a forecast', :vcr do
-    expect(@forecast.latitude).to eq('39.7392358')
-    expect(@forecast.longitude).to eq('-104.990251')
+    location = 'denver,co'
+    forecast = Forecast.new(location)
+    expect(forecast.latitude).to eq('39.7392358')
+    expect(forecast.longitude).to eq('-104.990251')
     
     hawaii_location = 'honolulu,hi'
     hawaii_forecast = Forecast.new(hawaii_location)
@@ -20,23 +20,27 @@ describe Forecast do
     expect(hawaii_forecast.longitude).to eq('-157.8583333')
   end
   it 'sets the date for a forecast', :vcr do
-    expect(@forecast.date).to eq(Time.now.strftime('%Y-%m-%d'))
+    location = 'denver,co'
+    forecast = Forecast.new(location)
+    expect(forecast.date).to eq(Time.now.strftime('%Y-%m-%d'))
   end
   it 'can get current_weather info', :vcr do
-    allow_any_instance_of(WeatherService).to receive(:get_weather).and_return(JSON.parse(File.read(Rails.root.join('spec/fixtures/weather_data.txt')), symbolize_names: true))
-    current_weather_day_info = {
-                                temperature: 34.97,
-                                temp_feels_like: 34.97,
-                                temp_high: 37.22,
-                                temp_low: 17.63,
-                                humidity: 0.55,
-                                visibility: 10,
-                                uv_index: 4,
-                                summary: "Light snow (< 1 in.) until afternoon.",
-                                summary_short: 'Partly Cloudy',
-                                summary_tonight: "Light snow (< 1 in.) until afternoon."
-    }
-    expect(@forecast.get_current_weather). to eq(current_weather_day_info)
+    location = 'denver,co'
+    forecast = Forecast.new(location)
+
+    weather = JSON.parse(forecast.get_current_weather.to_json, symbolize_names: true)
+    expect(weather).to have_key(:temperature)
+    expect(weather[:temperature]).to_not be_nil
+    expect(weather).to have_key(:temp_feels_like)
+    expect(weather[:temp_feels_like]).to_not be_nil
+    expect(weather).to have_key(:temp_high)
+    expect(weather).to have_key(:temp_low)
+    expect(weather).to have_key(:humidity)
+    expect(weather).to have_key(:visibility)
+    expect(weather).to have_key(:uv_index)
+    expect(weather).to have_key(:summary)
+    expect(weather).to have_key(:summary_short)
+    expect(weather).to have_key(:summary_tonight)
   end
   it 'can get weather days', :vcr do
     allow_any_instance_of(Forecast).to receive(:latitude).and_return('12')
@@ -62,5 +66,19 @@ describe Forecast do
     expect(forecast.get_weather_hours.first).to have_key(:time)
     expect(forecast.get_weather_hours.first).to have_key(:temperature)
     expect(forecast.get_weather_hours.first).to have_key(:icon)
+  end
+  it 'creates location record if needed', :vcr do
+    location = 'denver,co'
+    Forecast.new(location)
+    loc = Location.last
+    expect(loc.city).to eq('Denver')
+    expect(loc.state).to eq('CO')
+  end
+  it 'finds existing location record if present', :vcr do
+    location = create(:location)
+    loc_string = "#{location.city},#{location.state}"
+    Forecast.new(loc_string)
+    
+    expect(Location.last).to eq(location)
   end
 end

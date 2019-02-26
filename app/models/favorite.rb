@@ -1,4 +1,4 @@
 class Favorite < ApplicationRecord
-  validates_presence_of :location
   belongs_to :user
+  belongs_to :location
 end
