@@ -15,6 +15,6 @@ class GifPresenter
   private
   
   def weather_days
-    @_weather_days ||= Forecast.new(location: location).get_weather_days
+    @_weather_days ||= Forecast.new(location).get_weather_days
   end
 end

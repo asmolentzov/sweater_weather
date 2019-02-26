@@ -6,10 +6,10 @@ class Forecast
               :state,
               :date
               
-  def initialize(location: nil, city: nil, state: nil, latitude: nil, longitude: nil)
-    location = location.split(',') if location
-    @city = city || location[0].capitalize
-    @state = state || location[1].upcase
+  def initialize(location)
+    location = location.split(',')
+    @city = location[0].capitalize
+    @state = location[1].upcase
     @location = set_location
     @date = set_date
   end
@@ -23,7 +23,7 @@ class Forecast
   end
   
   def get_current_weather
-    weather.current_weather
+    @location.current_weather
   end
   
   def get_weather_hours
