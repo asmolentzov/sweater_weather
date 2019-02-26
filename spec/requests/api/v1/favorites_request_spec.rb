@@ -38,12 +38,10 @@ describe 'Favorites API' do
     favorites = JSON.parse(response.body, symbolize_names: true)
     expect(favorites[:data]).to be_empty
   end
-  it 'returns a list of a users favorites', :vcr do
+  it 'returns a list of a users favorites when one favorite', :vcr do
     user = User.create(email: 'email', password: 'password')
-    location = Location.create(city: 'Denver', state: 'CO', latitude: '12', longitude: '-12')
-    location_2 = Location.create(city: 'Honolulu', state: 'HI', latitude: '12', longitude: '-12')
+    location = Location.create(city: 'Denver', state: 'CO', latitude: '39.7392358', longitude: '-104.990251')
     user.favorites.create(location: location)
-    user.favorites.create(location: location_2)
     get '/api/v1/favorites', params: { api_key: user.api_key }
     
     expect(response.status).to eq(200)
@@ -64,7 +62,23 @@ describe 'Favorites API' do
     expect(favorites.first[:attributes][:current_weather]).to have_key(:summary)
     expect(favorites.first[:attributes][:current_weather]).to have_key(:summary_short)
     expect(favorites.first[:attributes][:current_weather]).to have_key(:summary_tonight)
-    expect(favorites.last[:location]).to eq(location_2)
-    expect(favorites.last).to have_key(:current_weather)
+  end
+  it 'returns a list of a users favorites when multiple favorites', :vcr do
+    user = User.create(email: 'email', password: 'password')
+    location = create(:location)
+    location_2 = create(:location)
+    user.favorites.create(location: location)
+    user.favorites.create(location: location_2)
+    
+    get '/api/v1/favorites', params: { api_key: user.api_key }
+    
+    expect(response.status).to eq(200)
+    favorites = JSON.parse(response.body, symbolize_names: true)[:data]
+    
+    expect(favorites).to be_a(Array)
+    expect(favorites.first).to be_a(Hash)
+    expect(favorites.first[:attributes]).to have_key(:location)
+    expect(favorites.last[:attributes][:location]).to eq("#{location.city}, #{location.state}")
+    expect(favorites.last[:attributes]).to have_key(:current_weather)
   end
 end

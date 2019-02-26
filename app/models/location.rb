@@ -7,11 +7,11 @@ class Location < ApplicationRecord
   has_many :favorites
   belongs_to :current_weather, optional: true
   
-  after_commit :get_current_weather
+  after_create :get_current_weather
   
   private
   
   def get_current_weather
-    self.current_weather = CurrentWeather.create(Forecast.new(city: city, state: state, latitude: latitude, longitude: longitude).get_current_weather)
+    self.update(current_weather: CurrentWeather.create(Forecast.new(city: city, state: state, latitude: latitude, longitude: longitude).get_current_weather))
   end
 end
