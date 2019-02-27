@@ -47,25 +47,27 @@ describe Forecast do
     allow_any_instance_of(Forecast).to receive(:longitude).and_return('-12')
     forecast = Forecast.new('denver,co')
 
-    expect(forecast.get_weather_days).to be_a(Array)
-    expect(forecast.get_weather_days.count).to eq(5)
-    expect(forecast.get_weather_days.first).to have_key(:date)
-    expect(forecast.get_weather_days.first).to have_key(:icon)
-    expect(forecast.get_weather_days.first).to have_key(:summary)
-    expect(forecast.get_weather_days.first).to have_key(:precip_probability)
-    expect(forecast.get_weather_days.first).to have_key(:temp_high)
-    expect(forecast.get_weather_days.first).to have_key(:temp_low)
+    weather_days = forecast.get_weather_days
+    expect(weather_days).to be_a(Array)
+    expect(weather_days.count).to eq(5)
+    expect(weather_days.first).to have_key(:date)
+    expect(weather_days.first).to have_key(:icon)
+    expect(weather_days.first).to have_key(:summary)
+    expect(weather_days.first).to have_key(:precip_probability)
+    expect(weather_days.first).to have_key(:temp_high)
+    expect(weather_days.first).to have_key(:temp_low)
   end
   it 'can get weather hours', :vcr do
     allow_any_instance_of(Forecast).to receive(:latitude).and_return('12')
     allow_any_instance_of(Forecast).to receive(:longitude).and_return('-12')
     forecast = Forecast.new('denver,co')
     
-    expect(forecast.get_weather_hours).to be_a(Array)
-    expect(forecast.get_weather_hours.count).to eq(8)
-    expect(forecast.get_weather_hours.first).to have_key(:time)
-    expect(forecast.get_weather_hours.first).to have_key(:temperature)
-    expect(forecast.get_weather_hours.first).to have_key(:icon)
+    weather_hours = forecast.get_weather_hours
+    expect(weather_hours).to be_a(Array)
+    expect(weather_hours.count).to eq(8)
+    expect(weather_hours.first).to have_key(:time)
+    expect(weather_hours.first).to have_key(:temperature)
+    expect(weather_hours.first).to have_key(:icon)
   end
   it 'creates location record if needed', :vcr do
     location = 'denver,co'

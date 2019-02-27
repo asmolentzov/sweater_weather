@@ -23,11 +23,11 @@ class Forecast
   end
   
   def get_weather_hours
-    weather.weather_hours(HoursAhead)
+    JSON.parse(@location.weather_hours_collection.weather_hours_data, symbolize_names: true)
   end
   
   def get_weather_days
-    weather.weather_days(DaysAhead)
+    JSON.parse(@location.weather_days_collection.weather_days_data, symbolize_names: true)
   end
   
   private
