@@ -8,13 +8,11 @@ class Api::V1::FavoritesController < ApplicationController
   end
   
   def create
-    location = Location.find(params[:location])
     current_user.favorites.create(location: location)
     render json: FavoriteSerializer.new(Favorite.last), status: :created
   end
   
   def destroy
-    favorite = Favorite.find_by(location: params[:location])
     favorite.destroy
     render json: FavoriteSerializer.new(favorite)
   end
@@ -23,6 +21,14 @@ class Api::V1::FavoritesController < ApplicationController
   
   def current_user
     User.find_by(api_key: params[:api_key])
+  end
+  
+  def location
+    @_location ||= Location.find(params[:location])
+  end
+  
+  def favorite
+    @_favorite ||= Favorite.find_by(location: params[:location])
   end
   
   def require_authorization
