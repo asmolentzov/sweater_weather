@@ -78,7 +78,6 @@ describe Forecast do
     location = create(:location)
     loc_string = "#{location.city},#{location.state}"
     Forecast.new(loc_string)
-    
     expect(Location.last).to eq(location)
   end
 end

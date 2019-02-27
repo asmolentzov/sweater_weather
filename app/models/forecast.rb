@@ -37,8 +37,8 @@ class Forecast
       l.latitude = set_latitude
       l.longitude = set_longitude
       l.current_weather = CurrentWeather.create(weather.current_weather)
-      l.weather_days_collection = WeatherDaysCollection.create(weather.weather_days)
-      l.weather_hours_collection = WeatherHoursCollection.create(weather.weather_hours)
+      l.weather_days_collection = WeatherDaysCollection.create(weather_days_data: weather.weather_days(DaysAhead).to_json)
+      l.weather_hours_collection = WeatherHoursCollection.create(weather_hours_data: weather.weather_hours(HoursAhead).to_json)
     end
   end
   

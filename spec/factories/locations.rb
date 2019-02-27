@@ -5,5 +5,7 @@ FactoryBot.define do
     latitude { '12.1' }
     longitude { '-12.1' }
     current_weather
+    weather_hours_collection
+    weather_days_collection
   end
 end
