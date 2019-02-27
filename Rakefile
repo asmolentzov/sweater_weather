@@ -17,14 +17,14 @@ namespace 'weather' do
   task update_days: :environment do
     Location.all.each do |location|
       weather = Weather.new(location.latitude, location.longitude)
-      location.weather_days_collection.update(weather_days_data: JSON.parse(weather.weather_days))
+      location.weather_days_collection.update(weather_days_data: weather.weather_days(5).to_json)
     end
   end
   desc 'Requests and loads weather hours'
   task update_hours: :environment do
     Location.all.each do |location|
       weather = Weather.new(location.latitude, location.longitude)
-      location.weather_hours_collection.update(weather_hours_data: JSON.parse(weather.weather_hours))
+      location.weather_hours_collection.update(weather_hours_data: weather.weather_hours(8).to_json)
     end
   end
 end
