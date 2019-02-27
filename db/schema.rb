@@ -64,10 +64,14 @@ ActiveRecord::Schema.define(version: 2019_02_27_000940) do
 
   create_table "weather_days_collections", force: :cascade do |t|
     t.jsonb "weather_days_data"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   create_table "weather_hours_collections", force: :cascade do |t|
     t.jsonb "weather_hours_data"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
   add_foreign_key "favorites", "locations"
