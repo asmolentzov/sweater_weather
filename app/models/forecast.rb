@@ -4,22 +4,18 @@ class Forecast
   
   attr_reader :city,
               :state,
-              :date
+              :date,
+              :latitude,
+              :longitude
               
-  def initialize(location)
-    location = location.split(',')
-    @city = location[0].capitalize
-    @state = location[1].upcase
-    @location = set_location
+  def initialize(city_state)
+    city_state = city_state.split(',')
+    @city = city_state[0].capitalize
+    @state = city_state[1].upcase
+    @latitude = set_latitude
+    @longitude = set_longitude
     @date = set_date
-  end
-  
-  def latitude
-    @_latitude ||= location_service.get_latitude
-  end
-  
-  def longitude
-    @_longitude ||= location_service.get_longitude
+    @location = location
   end
   
   def get_current_weather
@@ -27,21 +23,31 @@ class Forecast
   end
   
   def get_weather_hours
-    weather.weather_hours(HoursAhead)
+    JSON.parse(@location.weather_hours_collection.weather_hours_data, symbolize_names: true)
   end
   
   def get_weather_days
-    weather.weather_days(DaysAhead)
+    JSON.parse(@location.weather_days_collection.weather_days_data, symbolize_names: true)
   end
   
   private
   
-  def set_location
-    if location = Location.find_by(city: @city, state: @state)
-      @location = location
-    else
-      Location.create(city: @city, state: @state, latitude: latitude, longitude: longitude, current_weather: CurrentWeather.create(weather.current_weather))
+  def location
+    Location.find_or_create_by(city: city, state: state) do |l|
+      l.latitude = set_latitude
+      l.longitude = set_longitude
+      l.current_weather = CurrentWeather.create(weather.current_weather)
+      l.weather_days_collection = WeatherDaysCollection.create(weather_days_data: weather.weather_days(DaysAhead).to_json)
+      l.weather_hours_collection = WeatherHoursCollection.create(weather_hours_data: weather.weather_hours(HoursAhead).to_json)
     end
+  end
+  
+  def set_latitude
+    @_latitude ||= location_service.get_latitude
+  end
+  
+  def set_longitude
+    @_longitude ||= location_service.get_longitude
   end
   
   def weather

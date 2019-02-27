@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_02_26_024631) do
+ActiveRecord::Schema.define(version: 2019_02_27_000940) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -47,7 +47,11 @@ ActiveRecord::Schema.define(version: 2019_02_26_024631) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.bigint "current_weather_id"
+    t.bigint "weather_hours_collection_id"
+    t.bigint "weather_days_collection_id"
     t.index ["current_weather_id"], name: "index_locations_on_current_weather_id"
+    t.index ["weather_days_collection_id"], name: "index_locations_on_weather_days_collection_id"
+    t.index ["weather_hours_collection_id"], name: "index_locations_on_weather_hours_collection_id"
   end
 
   create_table "users", force: :cascade do |t|
@@ -58,7 +62,21 @@ ActiveRecord::Schema.define(version: 2019_02_26_024631) do
     t.string "api_key"
   end
 
+  create_table "weather_days_collections", force: :cascade do |t|
+    t.jsonb "weather_days_data"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "weather_hours_collections", force: :cascade do |t|
+    t.jsonb "weather_hours_data"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   add_foreign_key "favorites", "locations"
   add_foreign_key "favorites", "users"
   add_foreign_key "locations", "current_weathers"
+  add_foreign_key "locations", "weather_days_collections"
+  add_foreign_key "locations", "weather_hours_collections"
 end

@@ -37,7 +37,6 @@ describe 'Forecast API' do
   it 'returns weather data for weather hours', :vcr do
     get '/api/v1/forecast?location=denver,co'
     forecast_data = JSON.parse(response.body, symbolize_names: true)
-    
     expect(forecast_data[:data][:attributes]).to have_key(:weather_hours)
     expect(forecast_data[:data][:attributes][:weather_hours]).to be_a(Array)
     expect(forecast_data[:data][:attributes][:weather_hours].count).to eq(8)
