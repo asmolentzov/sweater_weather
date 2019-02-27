@@ -1,0 +1,4 @@
+class WeatherHoursCollection < ApplicationRecord
+  
+
+end

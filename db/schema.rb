@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_02_27_000351) do
+ActiveRecord::Schema.define(version: 2019_02_27_000830) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -60,6 +60,10 @@ ActiveRecord::Schema.define(version: 2019_02_27_000351) do
 
   create_table "weather_days_collections", force: :cascade do |t|
     t.jsonb "weather_days_data"
+  end
+
+  create_table "weather_hours_collections", force: :cascade do |t|
+    t.jsonb "weather_hours_data"
   end
 
   add_foreign_key "favorites", "locations"
