@@ -5,10 +5,26 @@ require_relative 'config/application'
 
 Rails.application.load_tasks
 
-desc "Requests and loads current weather info"
-task update_current_weather: :environment do
-  Location.all.each do |location|
-    weather = Weather.new(location.latitude, location.longitude).current_weather
-    location.current_weather.update(weather)
+namespace 'weather' do
+  desc "Requests and loads current weather info"
+  task update_current: :environment do
+    Location.all.each do |location|
+      weather = Weather.new(location.latitude, location.longitude)
+      location.current_weather.update(weather.current_weather)
+    end
+  end
+  desc 'Requests and loads weather days'
+  task update_days: :environment do
+    Location.all.each do |location|
+      weather = Weather.new(location.latitude, location.longitude)
+      location.weather_days_collection.update(weather_days_data: JSON.parse(weather.weather_days))
+    end
+  end
+  desc 'Requests and loads weather hours'
+  task update_hours: :environment do
+    Location.all.each do |location|
+      weather = Weather.new(location.latitude, location.longitude)
+      location.weather_hours_collection.update(weather_hours_data: JSON.parse(weather.weather_hours))
+    end
   end
 end
