@@ -30,6 +30,10 @@ class Forecast
     JSON.parse(@location.weather_days_collection.weather_days_data, symbolize_names: true)
   end
   
+  def location_id
+    @location.id
+  end
+  
   private
   
   def location
