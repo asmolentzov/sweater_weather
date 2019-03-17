@@ -1,5 +1,10 @@
 class FavoriteSerializer
   include FastJsonapi::ObjectSerializer
+  
+  set_id do |object|
+    object.location.id
+  end
+  
   attribute :city do |object|
     object.location.city
   end
