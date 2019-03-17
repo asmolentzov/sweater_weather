@@ -48,8 +48,10 @@ describe 'Favorites API' do
     favorites = JSON.parse(response.body, symbolize_names: true)[:data]
     expect(favorites).to be_a(Array)
     expect(favorites.first).to be_a(Hash)
-    expect(favorites.first[:attributes]).to have_key(:location)
-    expect(favorites.first[:attributes][:location]).to eq("#{location.city}, #{location.state}")
+    expect(favorites.first[:attributes]).to have_key(:city)
+    expect(favorites.first[:attributes]).to have_key(:state)
+    expect(favorites.first[:attributes][:city]).to eq(location.city)
+    expect(favorites.first[:attributes][:state]).to eq(location.state)
     expect(favorites.first[:attributes]).to have_key(:current_weather)
     expect(favorites.first[:attributes][:current_weather]).to have_key(:temperature)
     expect(favorites.first[:attributes][:current_weather]).to have_key(:temp_feels_like)
@@ -74,8 +76,10 @@ describe 'Favorites API' do
     favorites = JSON.parse(response.body, symbolize_names: true)[:data]
     expect(favorites).to be_a(Array)
     expect(favorites.first).to be_a(Hash)
-    expect(favorites.first[:attributes]).to have_key(:location)
-    expect(favorites.last[:attributes][:location]).to eq("#{location.city}, #{location.state}")
+    expect(favorites.first[:attributes]).to have_key(:city)
+    expect(favorites.first[:attributes]).to have_key(:state)
+    expect(favorites.first[:attributes][:city]).to eq(location.city)
+    expect(favorites.first[:attributes][:state]).to eq(location.state)
     expect(favorites.last[:attributes]).to have_key(:current_weather)
     expect(favorites.last[:attributes][:current_weather]).to have_key(:temperature)
   end
@@ -106,8 +110,10 @@ describe 'Favorites API' do
     favorites = JSON.parse(response.body, symbolize_names: true)[:data]
     expect(favorites).to be_a(Hash)
     expect(favorites[:id]).to eq(delete_favorite.id.to_s)
-    expect(favorites[:attributes]).to have_key(:location)
-    expect(favorites[:attributes][:location]).to eq("#{delete_location.city}, #{delete_location.state}")
+    expect(favorites[:attributes]).to have_key(:city)
+    expect(favorites[:attributes]).to have_key(:state)
+    expect(favorites[:attributes][:city]).to eq(delete_location.city)
+    expect(favorites[:attributes][:state]).to eq(delete_location.state)
     expect(favorites[:attributes]).to have_key(:current_weather)
     expect(favorites[:attributes][:current_weather]).to have_key(:temperature)
     expect(Favorite.all.count).to eq(1)

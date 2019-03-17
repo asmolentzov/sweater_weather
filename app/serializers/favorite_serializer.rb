@@ -1,7 +1,11 @@
 class FavoriteSerializer
   include FastJsonapi::ObjectSerializer
-  attribute :location do |object|
-    "#{object.location.city}, #{object.location.state}"
+  attribute :city do |object|
+    object.location.city
+  end
+  
+  attribute :state do |object|
+    object.location.state
   end
   
   attribute :current_weather do |object|
