@@ -109,7 +109,7 @@ describe 'Favorites API' do
     expect(response.status).to eq(200)
     favorites = JSON.parse(response.body, symbolize_names: true)[:data]
     expect(favorites).to be_a(Hash)
-    expect(favorites[:id]).to eq(delete_favorite.id.to_s)
+    expect(favorites[:id]).to eq(delete_favorite.location.id.to_s)
     expect(favorites[:attributes]).to have_key(:city)
     expect(favorites[:attributes]).to have_key(:state)
     expect(favorites[:attributes][:city]).to eq(delete_location.city)
